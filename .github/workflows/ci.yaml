@@ -83,17 +83,25 @@ jobs:
         push: true
         tags: srishtisrivastava100343/weather-aggregator:{{ github_run_id }}
     
-    - name: update tag in helm chart
-      run: sed -i "s/tag: \"v1\"/tag: \"${{ github.run_id }}\"/" helm/go-weather-app-chart/values.yaml
-
-    - name: commit and push changes
+    update tag in helm chart:
+    runs-on: ubuntu-latest
+    needs: docker-push
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    - name: Set up Helm
+      uses: azure/setup-helm@v1
+    - name: Update Helm chart
       run: |
-        git config --global user.email "srishtisrivastava100@gmail.com"
+        sed -i "s/tag: v1/tag: ${{ github_run_id }}/g" helm/go-weather-app-chart/values.yaml
+    - name: Commit and push changes
+      run: |
+        git config --global user.email "srishtisrivastava100@gmail.com""
         git config --global user.name "sri231996"
         git add helm/go-weather-app-chart/values.yaml
-        git commit -m "update tag in helm chart"
+        git commit -m "Update tag in Helm chart"
         git push
-    
+  
 
 
 
