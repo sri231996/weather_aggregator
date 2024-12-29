@@ -54,6 +54,7 @@ jobs:
           args: ./... --config .golangci.yml
 
 
+
           
   vulnerability-scan-code:
     runs-on: ubuntu-latest
