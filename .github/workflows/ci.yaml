@@ -44,8 +44,8 @@ jobs:
           export PATH=$(go env GOPATH)/bin:$PATH
           curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.56.2
 
-      - name: Clean golangci-lint cache
-        run: golangci-lint cache clean
+      # - name: Clean golangci-lint cache
+      #   run: golangci-lint cache clean
 
       - name: Run golangci-lint
         uses: golangci/golangci-lint-action@v6
