@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+    - "README.md"
+    - "helm/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout reposiotry
+      uses: actions/checkout@v4
+
+    - name: Set up Go 1.20
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.20
+    
+    - name : build go app
+      run: go build -o go-weather-app main.go
+
+    - name : Test go app
+      run: go test ./...
+  
+  code-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout reposiotry
+      uses: actions/checkout@v4
+
+    - name: Set up Go 1.20
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.20
+
+    - name: Install golangci-lint
+      run: go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.42.1
+
+    - name: Run golangci-lint
+      run: golangci-lint run
+
+  vulerability-scan-code:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Trivy
+      run: |
+        sudo apt-get install -y wget
+        wget https://github.com/aquasecurity/trivy/releases/download/v0.22.0/trivy_0.22.0_Linux-64bit.deb
+        sudo dpkg -i trivy_0.22.0_Linux-64bit.deb
+
+    - name: Run Trivy scan
+      run: trivy fs --exit-code 1 --severity HIGH,CRITICAL .
+
+
+    
+
+
