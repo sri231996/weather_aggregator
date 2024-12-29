@@ -52,12 +52,7 @@ code-quality:
       with:
         version: v1.56.2
         args: ./...
-
-
-
-
-
-          
+    
   vulnerability-scan-code:
     runs-on: ubuntu-latest
 
