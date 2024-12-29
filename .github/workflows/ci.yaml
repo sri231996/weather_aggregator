@@ -34,24 +34,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: 1.20
-
-    - name: Ensure Go module is initialized
-      run: |
-        if [ ! -f go.mod ]; then
-          echo "Missing go.mod! Initializing..."
-          go mod init weather_aggregator
-        fi
-        go mod tidy
-
     - name: Run golangci-lint
       uses: golangci/golangci-lint-action@v6
       with:
         version: v1.56.2
-        args: ./...
     
   vulnerability-scan-code:
     runs-on: ubuntu-latest
