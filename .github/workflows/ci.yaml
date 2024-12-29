@@ -27,10 +27,10 @@ jobs:
       - name: Test Go app
         run: CGO_ENABLED=0 go test ./...
 
-code-quality:
-  runs-on: ubuntu-latest
+  code-quality:
+    runs-on: ubuntu-latest
 
-  steps:
+    steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
