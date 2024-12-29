@@ -84,7 +84,7 @@ jobs:
         tags: srishtisrivastava100343/weather-aggregator:{{ github_run_id }}
     
     - name: update tag in helm chart
-      run: sed -i 's/tag: "v1"/tag: "{{ github_run_id }}"/' helm/go-weather-app-chart/values.yaml
+      run: sed -i "s/tag: \"v1\"/tag: \"${{ github.run_id }}\"/" helm/go-weather-app-chart/values.yaml
 
     - name: commit and push changes
       run: |
