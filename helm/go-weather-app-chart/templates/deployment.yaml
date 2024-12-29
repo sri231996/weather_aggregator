@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-weather-app
+  labels:
+    app: go-weather-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go-weather-app
+  template:
+    metadata:
+      labels:
+        app: go-weather-app
+    spec:
+      containers:
+      - name: go-weather-app
+        image: srishtisrivastava100343/weather-aggregator:{{ .Values.image.tag}}
+        ports:
+        - containerPort: 8080
+        env:
+        - name: OPENWEATHER_API_KEY
+          value: "78c4f17841fa24fe08f9b0a1bf8c3f97"
